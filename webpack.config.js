@@ -2,9 +2,10 @@
 
 const path = require ('path');
 const webpack = require('webpack');
+const validate = require('webpack-validator')
 
 /// Config Webpack
-module.exports = {
+module.exports = validate({
 
     /// To Help Debug
     devtool: 'source-map',
@@ -36,6 +37,15 @@ module.exports = {
     /// Config Babel
     /// What file gona use to compile bundle file
     module: {
+
+        // Lint
+        preLoaders:[{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            include: /src/,
+            loader: 'standard'
+        }],
+
         loaders: [{
             test: /\.js$/,
             exclude: /node_modules/,
@@ -43,5 +53,4 @@ module.exports = {
             loader: 'babel'
         }]
     }
-
-};
+});
